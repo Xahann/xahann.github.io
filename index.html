@@ -5,15 +5,40 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Text  Color Hex UI</title>
   <style>
-    body{font-family:Segoe UI,Arial;margin:16px;background:#f7f7f8;color:#111}
-    .container{max-width:980px;margin:0 auto}
-    textarea{width:100%;height:100px;font-family:monospace}
-    pre{background:#fff;padding:8px;border:1px solid #ddd;overflow:auto}
-    .row{display:flex;gap:12px}
-    .col{flex:1}
-    label{font-weight:600}
-    button{padding:8px 12px;margin-top:8px}
-    canvas{border:1px solid #ccc;display:block;margin-top:8px}
+    :root{
+      --bg:#0f1720; --card:#0b1220; --muted:#9aa4b2; --accent:#ff5252; --glass:rgba(255,255,255,0.04);
+      --radius:12px; --gap:14px; --shadow:0 6px 18px rgba(2,6,23,0.6);
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter,Segoe UI,Arial,sans-serif;margin:24px;background:linear-gradient(180deg,#071021 0%, #0b1520 100%);color:#e6eef6;-webkit-font-smoothing:antialiased}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    h1{margin:0 0 12px;font-weight:600;color:#fff}
+
+    section.card{background:var(--card);border-radius:var(--radius);padding:18px;margin-bottom:var(--gap);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.03)}
+    label{display:block;font-weight:600;color:var(--muted);margin-bottom:8px}
+
+    textarea{width:100%;height:110px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);color:#e6eef6;padding:12px;border-radius:10px;resize:vertical}
+    pre{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);color:#d6e6f2;overflow:auto}
+
+    .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .controls button{background:linear-gradient(180deg,var(--accent), #cc3f3f);border:none;color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600;box-shadow:0 6px 18px rgba(255,82,82,0.12)}
+    .controls button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);font-weight:600}
+    .controls input[type=file]{color:var(--muted)}
+
+    .row{display:flex;gap:16px}
+    .col{flex:1;min-width:0}
+
+    #previewCanvas{display:block;width:100%;height:auto;border-radius:8px;background:transparent;margin-top:12px}
+
+    #mappingPreview{display:flex;flex-wrap:wrap;gap:8px}
+    .mapItem{width:110px;padding:8px;border-radius:8px;color:#fff;text-align:center;font-weight:600;box-shadow:0 6px 16px rgba(2,6,23,0.6)}
+
+    a#downloadLink{color:var(--accent);font-weight:600}
+
+    @media (max-width:760px){
+      .row{flex-direction:column}
+      .mapItem{width:48%}
+    }
   </style>
 </head>
 <body>
