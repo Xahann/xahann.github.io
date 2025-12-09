@@ -126,7 +126,9 @@
   document.getElementById('btnBase64').addEventListener('click', ()=>{
     const t=document.getElementById('textInput').value; if(!t) return alert('Enter text');
     const b64=utf8ToBase64(t);
-    document.getElementById('hexListPre').textContent = b64;
+    // Convert the base64 string into a JSON list of hex codes using the character map
+    const hexList = textToHexList(b64);
+    document.getElementById('hexListPre').textContent = JSON.stringify(hexList);
   });
 
   document.getElementById('btnTextToHex').addEventListener('click', ()=>{
