@@ -1,24 +1,181 @@
-<!DOCTYPE html> 
-<html>
-<audio controls loop>
-  <source src="lobster.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
- <Head>
-    <title>Random Bullshit</title>
-    <link rel="stylesheet" href="Style.css"/>
-  
-</Head>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Text  Color Hex UI</title>
+  <style>
+    body{font-family:Segoe UI,Arial;margin:16px;background:#f7f7f8;color:#111}
+    .container{max-width:980px;margin:0 auto}
+    textarea{width:100%;height:100px;font-family:monospace}
+    pre{background:#fff;padding:8px;border:1px solid #ddd;overflow:auto}
+    .row{display:flex;gap:12px}
+    .col{flex:1}
+    label{font-weight:600}
+    button{padding:8px 12px;margin-top:8px}
+    canvas{border:1px solid #ccc;display:block;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Text  Color Hex (Web UI)</h1>
 
-    <Body>
-        <h1>Why Yes, I do think a plastic chair can inspire Motivation</h1>
-        <p>Well there you are right there,<br> getting all motivated in a plastic chair</p>
-        <H2>Cock?</H2>
-        <a href="https://www.youtube.com/watch?v=ywthKNqI7uI">Cock?</a><br/>
-        <img src="Lobster.jpg"/>
-        <h3>Tbh my balls itch</h3> 
-        <p>If your balls be itchin then you must be a scritchen, like lets be honest,<br>if yo balls itchy
-        you gonna have your hand all up in their like i mean IN there,<br/> like if I were to give an exaple
-        it would be like scratching at a winning lotery ticket scratch fast and scratch hard </p>
-    </Body>
+    <section>
+      <label for="textInput">Input text</label>
+      <textarea id="textInput" placeholder="Type or paste text here..."></textarea>
+      <div style="margin-top:8px">
+        <button id="btnBase64">Encode raw text to base64 and save to hexText (show)</button>
+        <button id="btnTextToHex">Convert text  hex list</button>
+        <label style="margin-left:12px"><input type="checkbox" id="optSquare" checked> Square image (transparent padding)</label>
+      </div>
+    </section>
+
+    <section style="margin-top:16px">
+      <h3>Hex list</h3>
+      <pre id="hexListPre">(hex list will appear here)</pre>
+      <button id="btnMakeImage">Generate image from hex list</button>
+      <a id="downloadLink" style="margin-left:8px"></a>
+      <canvas id="previewCanvas"></canvas>
+    </section>
+
+    <section style="margin-top:16px">
+      <h3>Decode image</h3>
+      <input type="file" id="imageFile" accept="image/*">
+      <button id="btnDecode">Decode loaded image</button>
+      <pre id="decodedPre">(decoded text will appear here)</pre>
+      <button id="btnTryBase64">Attempt base64 decode of recovered text</button>
+      <pre id="decodedTextPre">(decoded base64 result shown here)</pre>
+    </section>
+
+    <section style="margin-top:16px">
+      <h3>Character  Color mapping (excerpt)</h3>
+      <div id="mappingPreview"></div>
+    </section>
+  </div>
+
+  <script>
+  // CHARACTER_COLOR_MAP ported from main.py (shades of red)
+  const CHARACTER_COLOR_MAP = {
+    'a':'#A01414','b':'#A11414','c':'#A21414','d':'#A31414','e':'#A41414','f':'#A51414','g':'#A61414','h':'#A71414','i':'#A81414','j':'#A91414','k':'#AA1414','l':'#AB1414','m':'#AC1414','n':'#AD1414','o':'#AE1414','p':'#AF1414','q':'#B01414','r':'#B11414','s':'#B21414','t':'#B31414','u':'#B41414','v':'#B51414','w':'#B61414','x':'#B71414','y':'#B81414','z':'#B91414',
+    '0':'#BA1414','1':'#BB1414','2':'#BC1414','3':'#BD1414','4':'#BE1414','5':'#BF1414','6':'#C01414','7':'#C11414','8':'#C21414','9':'#C31414',
+    ' ':'#C41414',',':'#C51414','.':'#C61414','/':'#C71414',')':'#C81414','(':'#C91414',']':'#CA1414','[':'#CB1414','^':'#CC1414','%':'#CD1414','$':'#CE1414','#':'#CF1414','@':'#D01414','!':'#D11414','?':'#D21414','+':'#D31414','=':'#D41414',
+    'A':'#D51414','B':'#D61414','C':'#D71414','D':'#D81414','E':'#D91414','F':'#DA1414','G':'#DB1414','H':'#DC1414','I':'#DD1414','J':'#DE1414','K':'#DF1414','L':'#E01414','M':'#E11414','N':'#E21414','O':'#E31414','P':'#E41414','Q':'#E51414','R':'#E61414','S':'#E71414','T':'#E81414','U':'#E91414','V':'#EA1414','W':'#EB1414','X':'#EC1414','Y':'#ED1414','Z':'#EE1414'
+  };
+
+  // Build inverse map
+  const INVERSE_MAP = {};
+  Object.keys(CHARACTER_COLOR_MAP).forEach(k=>{INVERSE_MAP[CHARACTER_COLOR_MAP[k].toUpperCase()]=k});
+
+  function utf8ToBase64(str){return btoa(unescape(encodeURIComponent(str)));}
+  function base64ToUtf8(b64){try{return decodeURIComponent(escape(atob(b64)));}catch(e){return null}}
+
+  function textToHexList(text){
+    const arr=[];
+    for(const ch of text){ if(CHARACTER_COLOR_MAP[ch] !== undefined) arr.push(CHARACTER_COLOR_MAP[ch]); }
+    return arr;
+  }
+
+  function makeImageFromHexList(hexList, square=true){
+    if(!hexList || hexList.length===0) return null;
+    const n=hexList.length;
+    let width,height;
+    if(square){ const side=Math.ceil(Math.sqrt(n)); width=side;height=side; }
+    else{ width=n;height=1; }
+    const canvas=document.getElementById('previewCanvas');
+    canvas.width=width; canvas.height=height;
+    const ctx=canvas.getContext('2d');
+    // clear with transparent
+    ctx.clearRect(0,0,width,height);
+    const imgData=ctx.createImageData(width,height);
+    let idx=0;
+    for(let i=0;i<n;i++){
+      const hex=hexList[i].replace('#','');
+      const r=parseInt(hex.slice(0,2),16), g=parseInt(hex.slice(2,4),16), b=parseInt(hex.slice(4,6),16);
+      let px=i;
+      if(square){
+        const side=width;
+        const y=Math.floor(i/side), x=i%side; px = y*width + x;
+      }
+      imgData.data[px*4+0]=r; imgData.data[px*4+1]=g; imgData.data[px*4+2]=b; imgData.data[px*4+3]=255;
+    }
+    ctx.putImageData(imgData,0,0);
+    return canvas;
+  }
+
+  function downloadCanvas(canvas,filename){
+    canvas.toBlob(function(blob){
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a'); a.href=url; a.download=filename||'encoded_image.png'; a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  // Decode pixels from canvas (skip transparent)
+  function decodeCanvasToText(canvas){
+    const ctx=canvas.getContext('2d'); const w=canvas.width; const h=canvas.height;
+    const d=ctx.getImageData(0,0,w,h).data; let chars='';
+    for(let i=0;i<w*h;i++){
+      const a=d[i*4+3]; if(a===0) continue; const r=d[i*4], g=d[i*4+1], b=d[i*4+2];
+      const hex = '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
+      const ch = INVERSE_MAP[hex]; chars += (ch===undefined)?'?':ch;
+    }
+    return chars;
+  }
+
+  // UI wiring
+  document.getElementById('btnBase64').addEventListener('click', ()=>{
+    const t=document.getElementById('textInput').value; if(!t) return alert('Enter text');
+    const b64=utf8ToBase64(t);
+    document.getElementById('hexListPre').textContent = b64;
+  });
+
+  document.getElementById('btnTextToHex').addEventListener('click', ()=>{
+    const t=document.getElementById('textInput').value; if(!t) return alert('Enter text');
+    const hexList=textToHexList(t);
+    document.getElementById('hexListPre').textContent = JSON.stringify(hexList);
+  });
+
+  document.getElementById('btnMakeImage').addEventListener('click', ()=>{
+    let hexs;
+    try{ hexs = JSON.parse(document.getElementById('hexListPre').textContent); }
+    catch(e){ return alert('Hex list must be a JSON array of hex codes.'); }
+    const square = document.getElementById('optSquare').checked;
+    const canvas = makeImageFromHexList(hexs, square);
+    if(canvas){ document.getElementById('downloadLink').textContent='Download image'; document.getElementById('downloadLink').href='#';
+      document.getElementById('downloadLink').onclick=(e)=>{ e.preventDefault(); downloadCanvas(canvas,'encoded_image.png'); }
+    }
+  });
+
+  // Image file load
+  let loadedImageCanvas=null;
+  document.getElementById('imageFile').addEventListener('change', (ev)=>{
+    const f=ev.target.files[0]; if(!f) return; const img=new Image(); const url=URL.createObjectURL(f);
+    img.onload = ()=>{ const c=document.getElementById('previewCanvas'); c.width=img.width; c.height=img.height; c.getContext('2d').clearRect(0,0,c.width,c.height); c.getContext('2d').drawImage(img,0,0); loadedImageCanvas=c; URL.revokeObjectURL(url); };
+    img.src=url;
+  });
+
+  document.getElementById('btnDecode').addEventListener('click', ()=>{
+    const c=document.getElementById('previewCanvas'); if(c.width===0||c.height===0) return alert('Load an image first');
+    const decoded = decodeCanvasToText(c);
+    document.getElementById('decodedPre').textContent = decoded || '(no chars)';
+  });
+
+  document.getElementById('btnTryBase64').addEventListener('click', ()=>{
+    const s=document.getElementById('decodedPre').textContent.trim(); if(!s) return alert('No decoded characters');
+    const res = base64ToUtf8(s);
+    document.getElementById('decodedTextPre').textContent = res===null ? '(base64 decode failed)' : res;
+  });
+
+  // mapping preview
+  (function renderMap(){
+    const cont=document.getElementById('mappingPreview'); let html='';
+    let i=0; for(const k of Object.keys(CHARACTER_COLOR_MAP)){
+      html += `<span style="display:inline-block;width:80px;padding:6px;margin:4px;background:${CHARACTER_COLOR_MAP[k]};color:#fff">${k}: ${CHARACTER_COLOR_MAP[k]}</span>`;
+      i++; if(i%6===0) html += '<br>';
+    }
+    cont.innerHTML=html;
+  })();
+
+  </script>
+</body>
 </html>
