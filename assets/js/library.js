@@ -9,14 +9,25 @@
   const noResults = document.querySelector("[data-no-results]");
   const inspectorImage = document.querySelector("[data-inspector-image]");
   const inspectorPreview = document.querySelector(".inspector-preview");
-  const inspectorLink = document.querySelector("[data-inspector-link]");
   const inspectorAction = document.querySelector("[data-inspector-action]");
+  const originalDialog = document.querySelector("[data-original-dialog]");
+  const originalPreview = document.querySelector("[data-original-preview]");
+  const originalTitle = document.querySelector("[data-original-title]");
   const inspectorTitle = document.querySelector("[data-inspector-title]");
   const inspectorCategory = document.querySelector("[data-inspector-category]");
   const inspectorDescription = document.querySelector("[data-inspector-description]");
   const selectedIndex = document.querySelector("[data-selected-index]");
   const grid = document.querySelector("[data-photo-grid]");
   let activeFilter = "all";
+
+  const showOriginal = (image, title, alt) => {
+    if (!image) return;
+
+    originalPreview.src = image;
+    originalPreview.alt = alt;
+    originalTitle.textContent = title;
+    originalDialog.showModal();
+  };
 
   const updateGallery = () => {
     const query = searchInput.value.trim().toLocaleLowerCase();
@@ -80,11 +91,29 @@
       inspectorImage.alt = photo.dataset.alt;
       inspectorImage.hidden = !photo.dataset.image;
       inspectorPreview.classList.toggle("has-no-image", !photo.dataset.image);
+      inspectorPreview.disabled = !photo.dataset.image;
       if (photo.dataset.image) inspectorImage.src = photo.dataset.image;
-      inspectorLink.href = photo.dataset.url;
-      inspectorAction.href = photo.dataset.url;
+      inspectorPreview.setAttribute("aria-label", `View ${photo.dataset.title} at full quality`);
+      inspectorPreview.dataset.originalImage = photo.dataset.originalImage || "";
+      inspectorPreview.dataset.title = photo.dataset.title;
+      inspectorPreview.dataset.alt = photo.dataset.alt;
+      inspectorAction.dataset.originalImage = photo.dataset.originalImage || "";
+      inspectorAction.dataset.title = photo.dataset.title;
+      inspectorAction.dataset.alt = photo.dataset.alt;
+      inspectorAction.disabled = !photo.dataset.originalImage;
       selectedIndex.textContent = index + 1;
     });
+  });
+
+  [inspectorPreview, inspectorAction].forEach((button) => {
+    button.addEventListener("click", () => {
+      showOriginal(button.dataset.originalImage, button.dataset.title, button.dataset.alt);
+    });
+  });
+
+  document.querySelector("[data-original-close]").addEventListener("click", () => originalDialog.close());
+  originalDialog.addEventListener("click", (event) => {
+    if (event.target === originalDialog) originalDialog.close();
   });
 
   const viewToggle = document.querySelector("[data-view-toggle]");

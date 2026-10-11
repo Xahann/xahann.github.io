@@ -63,11 +63,12 @@ title: Home
 
       <div class="photo-grid" data-photo-grid>
         {% for photo in all_photos %}
-          {% assign photo_link = photo.external_url | default: site.data.site.photos_url %}
           {% assign photo_image = photo.image %}
+          {% assign photo_filename = photo.image | split: "/" | last %}
+          {% assign photo_original = photo_filename | prepend: "/WEBSITE/" | relative_url %}
           {% unless photo_image contains '://' %}{% assign photo_image = photo_image | relative_url %}{% endunless %}
           <article class="photo-card" data-photo-card data-category="{{ photo.category | downcase | escape }}" data-search="{{ photo.title | downcase | escape }} {{ photo.category | downcase | escape }} {{ photo.description | downcase | escape }}">
-            <button class="photo-select{% if forloop.first %} is-selected{% endif %}" type="button" data-photo-select="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Show details for {{ photo.title | escape }}" data-title="{{ photo.title | escape }}" data-category-label="{{ photo.category | escape }}" data-description="{{ photo.description | escape }}" data-image="{{ photo_image | escape }}" data-alt="{{ photo.image_alt | default: photo.title | escape }}" data-url="{{ photo_link | escape }}">
+            <button class="photo-select{% if forloop.first %} is-selected{% endif %}" type="button" data-photo-select="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Show details for {{ photo.title | escape }}" data-title="{{ photo.title | escape }}" data-category-label="{{ photo.category | escape }}" data-description="{{ photo.description | escape }}" data-image="{{ photo_image | escape }}" data-original-image="{{ photo_original | escape }}" data-alt="{{ photo.image_alt | default: photo.title | escape }}">
               <span class="photo-thumbnail">
                 {% if photo.image != blank %}
                   <img src="{{ photo_image | escape }}" alt="" loading="lazy" decoding="async">
@@ -81,7 +82,6 @@ title: Home
                 <small>{{ photo.category | escape }}</small>
               </span>
             </button>
-            <a class="photo-open" href="{{ photo_link | escape }}" target="_blank" rel="noreferrer" aria-label="Open {{ photo.title | escape }} in the full portfolio">↗</a>
           </article>
         {% else %}
           <p class="empty-state">Add photographs from Pages CMS to build your archive.</p>
@@ -110,13 +110,13 @@ title: Home
         <span class="inspector-menu" aria-hidden="true">•••</span>
       </div>
       {% if featured_project %}
-        {% assign featured_link = featured_project.external_url | default: site.data.site.photos_url %}
         {% assign featured_image = featured_project.image %}
+        {% assign featured_filename = featured_project.image | split: "/" | last %}
+        {% assign featured_original = featured_filename | prepend: "/WEBSITE/" | relative_url %}
         {% unless featured_image contains '://' %}{% assign featured_image = featured_image | relative_url %}{% endunless %}
-        <a class="inspector-preview" data-inspector-link href="{{ featured_link | escape }}" target="_blank" rel="noreferrer" aria-label="Open selected photo in the full portfolio">
+        <button class="inspector-preview" data-inspector-link type="button" aria-label="View {{ featured_project.title | escape }} at full quality" data-original-image="{{ featured_original | escape }}" data-title="{{ featured_project.title | escape }}" data-alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">
           <img data-inspector-image src="{{ featured_image | escape }}" alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">
-          <span class="preview-open" aria-hidden="true">↗</span>
-        </a>
+        </button>
         <section class="inspector-section">
           <p class="panel-label">SELECTED PHOTO</p>
           <h3 data-inspector-title>{{ featured_project.title | escape }}</h3>
@@ -130,7 +130,7 @@ title: Home
             <div><dt>Medium</dt><dd>Photography</dd></div>
           </dl>
         </section>
-        <a class="inspector-link" data-inspector-action href="{{ featured_link | escape }}" target="_blank" rel="noreferrer">View original <span aria-hidden="true">↗</span></a>
+        <button class="inspector-link" data-inspector-action type="button" data-original-image="{{ featured_original | escape }}" data-title="{{ featured_project.title | escape }}" data-alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">See original</button>
       {% else %}
         <p class="empty-state">Your photo details will appear here.</p>
       {% endif %}
@@ -156,4 +156,11 @@ title: Home
     {% endfor %}
   </div>
 </section>
+<dialog class="original-dialog" data-original-dialog aria-label="Original photograph">
+  <div class="original-dialog-heading">
+    <p data-original-title></p>
+    <button class="original-dialog-close" type="button" data-original-close aria-label="Close original photograph">×</button>
+  </div>
+  <img data-original-preview alt="">
+</dialog>
 <script src="{{ '/assets/js/library.js' | relative_url }}" defer></script>
