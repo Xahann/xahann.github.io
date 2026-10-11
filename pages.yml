@@ -1,0 +1,120 @@
+media:
+  input: assets/uploads
+  output: /assets/uploads
+  extensions: [jpg, jpeg, png, webp, gif, svg]
+
+content:
+  - name: site
+    label: Site settings
+    type: file
+    path: _data/site.yml
+    format: yaml
+    fields:
+      - name: name
+        label: Your name
+        type: string
+        required: true
+      - name: role
+        label: Role
+        type: string
+      - name: headline
+        label: Homepage headline
+        type: string
+        required: true
+      - name: intro
+        label: Introduction
+        type: text
+      - name: email
+        label: Contact email
+        type: string
+        required: true
+      - name: location
+        label: Location
+        type: string
+      - name: availability
+        label: Availability
+        type: string
+      - name: github
+        label: GitHub profile URL
+        type: string
+      - name: linkedin
+        label: LinkedIn profile URL
+        type: string
+
+  - name: about
+    label: About page
+    type: file
+    path: about.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        type: string
+        required: true
+      - name: permalink
+        type: string
+        hidden: true
+      - name: description
+        type: text
+      - name: body
+        label: Page content
+        type: rich-text
+
+  - name: projects
+    label: Projects
+    type: collection
+    path: _projects
+    filename: "{primary}.md"
+    format: yaml-frontmatter
+    view:
+      primary: title
+      sort: year
+      order: desc
+    fields:
+      - name: title
+        type: string
+        required: true
+      - name: year
+        type: number
+        required: true
+      - name: category
+        type: string
+      - name: description
+        type: text
+        required: true
+      - name: url
+        label: Project link
+        type: string
+      - name: image
+        label: Project image
+        type: image
+      - name: image_alt
+        label: Image description
+        type: string
+      - name: body
+        label: Notes
+        type: rich-text
+
+  - name: posts
+    label: Journal posts
+    type: collection
+    path: _posts
+    filename: "{year}-{month}-{day}-{primary}.md"
+    format: yaml-frontmatter
+    view:
+      primary: title
+      sort: date
+      order: desc
+    fields:
+      - name: title
+        type: string
+        required: true
+      - name: date
+        type: date
+        required: true
+      - name: category
+        type: string
+      - name: description
+        type: text
+      - name: body
+        label: Post content
+        type: rich-text
