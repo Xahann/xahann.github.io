@@ -19,8 +19,8 @@ library.
 
 ## Update your site
 
-- **Site settings** changes the name, homepage headline, work focus, portfolio
-  and Instagram links, and booking email. Set the booking email address to your
+- **Site settings** changes the name, homepage headline, work focus, Instagram
+  link, and booking email. Set the booking email address to your
   own inbox; the booking form opens a prefilled message in the visitor's email app.
 - **Homepage** features a randomly selected carousel from the photo archive.
 - **Work** is the searchable photo archive, **Journal** lists all published

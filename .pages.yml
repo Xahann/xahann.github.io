@@ -31,10 +31,6 @@ content:
       - name: focus
         label: Work focus
         type: string
-      - name: photos_url
-        label: Photography portfolio URL
-        type: string
-        required: true
       - name: instagram
         label: Instagram profile URL
         type: string
