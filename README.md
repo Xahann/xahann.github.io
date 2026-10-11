@@ -19,17 +19,21 @@ library.
 
 ## Update your site
 
-- **Site settings** changes the name, homepage headline, work focus, and portfolio
-  and Instagram links.
+- **Site settings** changes the name, homepage headline, work focus, portfolio
+  and Instagram links, and booking email. Set the booking email address to your
+  own inbox; the booking form opens a prefilled message in the visitor's email app.
+- **Homepage** features a randomly selected carousel from the photo archive.
+- **Work** is the searchable photo archive, **Journal** lists all published
+  notes, and **Booking** collects project details for an email inquiry.
 - **Projects** adds or edits featured photos. Upload images in the project
   editor; images are stored in `assets/uploads`.
 - **Website photo archive** images are listed in `_data/website_photos.yml` and
   optimized copies live in `assets/uploads/website`. The original JPEGs are not
   modified. Add an `instagram_url` to a photo entry only when you have verified
-  that the Instagram post contains that photo; the homepage then shows a link
+  that the Instagram post contains that photo; the Work page then shows a link
   to that post when the photo is selected.
-- **Journal posts** creates and edits dated posts. The homepage shows the four
-  newest.
+- **Journal posts** creates and edits dated posts. New posts appear on the
+  Journal page.
 - **About page** edits the long-form introduction.
 
 Pages CMS saves changes as commits to the repository. GitHub Pages rebuilds the

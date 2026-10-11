@@ -1,0 +1,136 @@
+---
+layout: default
+title: Work
+permalink: /work/
+description: Browse Xane's photography archive.
+---
+{% assign all_photos = site.data.website_photos %}
+{% assign featured_project = all_photos | first %}
+<div class="library-shell">
+  <div class="library-workspace" id="work">
+    <aside class="library-sidebar" aria-label="Photo collections">
+      <p class="panel-label">CATALOG</p>
+      <button class="catalog-item is-active" type="button" data-filter="all" data-filter-label="WEBSITE photo archive" aria-pressed="true">
+        <span class="catalog-icon" aria-hidden="true">▦</span> WEBSITE photos
+        <span class="catalog-count" data-filter-count="all">{{ all_photos.size }}</span>
+      </button>
+
+      <p class="panel-label sidebar-subhead">FILTER BY</p>
+      <button class="catalog-item" type="button" data-filter="motorsport &amp; automotive" data-filter-label="Motorsport &amp; automotive" aria-pressed="false">
+        <span class="catalog-icon" aria-hidden="true">⌁</span> Motorsport &amp; auto
+        <span class="catalog-count" data-filter-count="motorsport &amp; automotive">0</span>
+      </button>
+      <p class="panel-label sidebar-subhead">COLLECTIONS</p>
+      <div class="collection-list">
+        {% for photo in all_photos %}
+          <button class="collection-item" type="button" data-select-photo="{{ forloop.index0 }}">
+            <span class="collection-dot" aria-hidden="true"></span>{{ photo.title | escape }}
+          </button>
+        {% endfor %}
+      </div>
+
+      <a class="sidebar-about" href="{{ '/about/' | relative_url }}">About Xane <span aria-hidden="true">↗</span></a>
+    </aside>
+
+    <section class="library-main" aria-label="Selected photography">
+      <div class="library-toolbar">
+        <div class="toolbar-heading">
+          <p class="eyebrow">{{ site.data.site.role | escape }}</p>
+          <h1><span data-gallery-title>WEBSITE photo archive</span> <span class="toolbar-total" data-visible-count>{{ all_photos.size }}</span></h1>
+        </div>
+        <div class="toolbar-actions">
+          <label class="photo-search">
+            <span aria-hidden="true">⌕</span>
+            <span class="visually-hidden">Search photographs</span>
+            <input type="search" placeholder="Search photographs" data-photo-search>
+          </label>
+          <button class="view-toggle" type="button" data-view-toggle aria-pressed="false" aria-label="Switch to compact view" title="Switch view">▦</button>
+        </div>
+      </div>
+
+      <div class="photo-grid" data-photo-grid>
+        {% for photo in all_photos %}
+          {% assign photo_image = photo.image %}
+          {% assign photo_filename = photo.image | split: "/" | last %}
+          {% assign photo_original = photo_filename | prepend: "/WEBSITE/" | relative_url %}
+          {% unless photo_image contains '://' %}{% assign photo_image = photo_image | relative_url %}{% endunless %}
+          <article class="photo-card" data-photo-card data-category="{{ photo.category | downcase | escape }}" data-search="{{ photo.title | downcase | escape }} {{ photo.category | downcase | escape }} {{ photo.description | downcase | escape }}">
+            <button class="photo-select{% if forloop.first %} is-selected{% endif %}" type="button" data-photo-select="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Show details for {{ photo.title | escape }}" data-title="{{ photo.title | escape }}" data-category-label="{{ photo.category | escape }}" data-description="{{ photo.description | escape }}" data-image="{{ photo_image | escape }}" data-original-image="{{ photo_original | escape }}" data-instagram-url="{{ photo.instagram_url | escape }}" data-alt="{{ photo.image_alt | default: photo.title | escape }}">
+              <span class="photo-thumbnail">
+                {% if photo.image != blank %}
+                  <img src="{{ photo_image | escape }}" alt="" loading="lazy" decoding="async">
+                {% else %}
+                  <span class="thumbnail-placeholder" aria-hidden="true">{{ photo.title | slice: 0 }}</span>
+                {% endif %}
+                <span class="thumbnail-check" aria-hidden="true">✓</span>
+              </span>
+              <span class="thumbnail-label">
+                <strong>{{ photo.title | escape }}</strong>
+                <small>{{ photo.category | escape }}</small>
+              </span>
+            </button>
+          </article>
+        {% else %}
+          <p class="empty-state">Add photographs from Pages CMS to build your archive.</p>
+        {% endfor %}
+        <p class="no-results" data-no-results hidden>No photographs match that search.</p>
+      </div>
+
+      <div class="filmstrip-bar">
+        <span class="filmstrip-title">FILMSTRIP</span>
+        <div class="filmstrip" aria-label="Quick photo selection">
+          {% for photo in all_photos %}
+            {% assign photo_image = photo.image %}
+            {% unless photo_image contains '://' %}{% assign photo_image = photo_image | relative_url %}{% endunless %}
+            <button class="filmstrip-item{% if forloop.first %} is-selected{% endif %}" type="button" data-select-photo="{{ forloop.index0 }}" aria-label="Select {{ photo.title | escape }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+              {% if photo.image != blank %}<img src="{{ photo_image | escape }}" alt="" loading="lazy" decoding="async">{% else %}<span>{{ photo.title | slice: 0 }}</span>{% endif %}
+            </button>
+          {% endfor %}
+        </div>
+        <span class="filmstrip-position"><span data-selected-index>1</span> / {{ all_photos.size }}</span>
+      </div>
+    </section>
+
+    <aside class="photo-inspector" aria-label="Selected photograph details" data-photo-inspector>
+      <div class="inspector-heading">
+        <h2>Inspector</h2>
+        <span class="inspector-menu" aria-hidden="true">•••</span>
+      </div>
+      {% if featured_project %}
+        {% assign featured_image = featured_project.image %}
+        {% assign featured_filename = featured_project.image | split: "/" | last %}
+        {% assign featured_original = featured_filename | prepend: "/WEBSITE/" | relative_url %}
+        {% unless featured_image contains '://' %}{% assign featured_image = featured_image | relative_url %}{% endunless %}
+        <button class="inspector-preview" data-inspector-link type="button" aria-label="View {{ featured_project.title | escape }} at full quality" data-original-image="{{ featured_original | escape }}" data-title="{{ featured_project.title | escape }}" data-alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">
+          <img data-inspector-image src="{{ featured_image | escape }}" alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">
+        </button>
+        <section class="inspector-section">
+          <p class="panel-label">SELECTED PHOTO</p>
+          <h3 data-inspector-title>{{ featured_project.title | escape }}</h3>
+          <p class="inspector-description" data-inspector-description>{{ featured_project.description | escape }}</p>
+        </section>
+        <section class="inspector-section inspector-details">
+          <p class="panel-label">PHOTO DETAILS</p>
+          <dl>
+            <div><dt>Collection</dt><dd data-inspector-category>{{ featured_project.category | escape }}</dd></div>
+            <div><dt>Creator</dt><dd>{{ site.data.site.name | escape }}</dd></div>
+            <div><dt>Medium</dt><dd>Photography</dd></div>
+          </dl>
+        </section>
+        <button class="inspector-link" data-inspector-action type="button" data-original-image="{{ featured_original | escape }}" data-title="{{ featured_project.title | escape }}" data-alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">See original</button>
+        <a class="inspector-link inspector-instagram-link" data-inspector-instagram {% if featured_project.instagram_url %}href="{{ featured_project.instagram_url | escape }}"{% else %}hidden{% endif %} target="_blank" rel="noreferrer">View Instagram post <span aria-hidden="true">↗</span></a>
+      {% else %}
+        <p class="empty-state">Your photo details will appear here.</p>
+      {% endif %}
+    </aside>
+  </div>
+</div>
+
+<dialog class="original-dialog" data-original-dialog aria-label="Original photograph">
+  <div class="original-dialog-heading">
+    <p data-original-title></p>
+    <button class="original-dialog-close" type="button" data-original-close aria-label="Close original photograph">×</button>
+  </div>
+  <img data-original-preview alt="">
+</dialog>
+<script src="{{ '/assets/js/library.js' | relative_url }}" defer></script>

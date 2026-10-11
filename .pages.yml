@@ -24,6 +24,10 @@ content:
       - name: intro
         label: Introduction
         type: text
+      - name: email
+        label: Booking email
+        type: string
+        required: true
       - name: focus
         label: Work focus
         type: string

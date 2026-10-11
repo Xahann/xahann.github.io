@@ -1,0 +1,45 @@
+---
+layout: default
+title: Booking
+permalink: /booking/
+description: Get in touch with Xane about a photography or video booking.
+---
+<section class="page-shell booking-page">
+  <p class="eyebrow">Booking &amp; inquiries</p>
+  <h1 class="page-title">Let’s make something.</h1>
+  <p class="booking-intro">Share a few details about your project and I’ll be in touch.</p>
+  <form class="booking-form" data-booking-form data-recipient="{{ site.data.site.email | escape }}" action="mailto:{{ site.data.site.email | escape }}" method="post" enctype="text/plain">
+    <div class="booking-fields">
+      <label>
+        <span>Your name</span>
+        <input name="name" autocomplete="name" required>
+      </label>
+      <label>
+        <span>Email address</span>
+        <input name="email" type="email" autocomplete="email" required>
+      </label>
+      <label>
+        <span>What do you need?</span>
+        <select name="project" required>
+          <option value="" selected disabled>Select a project type</option>
+          <option>Photography</option>
+          <option>Videography</option>
+          <option>Photo and video</option>
+          <option>Something else</option>
+        </select>
+      </label>
+      <label>
+        <span>Preferred date <small>(optional)</small></span>
+        <input name="date" type="date">
+      </label>
+      <label class="booking-message">
+        <span>Tell me about the project</span>
+        <textarea name="message" rows="6" required></textarea>
+      </label>
+    </div>
+    <button class="button-link button-primary booking-submit" type="submit">Continue to email <span aria-hidden="true">↗</span></button>
+    <p class="booking-note">{% if site.data.site.email %}This form opens your email app with your inquiry ready to send.{% else %}Set a booking email in Pages CMS site settings to receive inquiries.{% endif %}</p>
+    <p class="booking-error" data-booking-error role="alert" hidden></p>
+  </form>
+</section>
+<script src="{{ '/assets/js/booking.js' | relative_url }}" defer></script>

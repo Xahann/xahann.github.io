@@ -1,0 +1,23 @@
+---
+layout: default
+title: Journal
+permalink: /journal/
+description: Field notes and stories from behind the lens.
+---
+<section class="page-shell journal-page">
+  <p class="eyebrow">Field notes</p>
+  <h1 class="page-title">Journal</h1>
+  <p class="journal-intro">Notes, process, and stories from behind the lens.</p>
+  <div class="post-list">
+    {% for post in site.posts %}
+      <a class="post-row" href="{{ post.url | relative_url }}">
+        <span class="post-date">{{ post.date | date: "%b %d, %Y" }}</span>
+        <span class="post-title">{{ post.title | escape }}</span>
+        <span class="post-category">{{ post.category | default: "Notes" | escape }}</span>
+        <span class="row-arrow" aria-hidden="true">↗</span>
+      </a>
+    {% else %}
+      <p class="empty-state">Journal entries will appear here.</p>
+    {% endfor %}
+  </div>
+</section>

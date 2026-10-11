@@ -8,15 +8,16 @@
     <title>{% if page.title %}{{ page.title | escape }} — {% endif %}{{ site.data.site.name | escape }}</title>
     <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
   </head>
-  <body{% if page.title == "Home" %} class="library-page"{% endif %}>
+  <body{% if page.title == "Work" %} class="library-page"{% endif %}>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <a class="wordmark" href="{{ '/' | relative_url }}">{{ site.data.site.name | escape }}<span class="wordmark-dot">.</span></a>
       <nav class="site-nav" aria-label="Main navigation">
-        <a href="{{ '/#work' | relative_url }}">Work</a>
-        <a href="{{ '/#journal' | relative_url }}">Journal</a>
-        <a href="{{ '/about/' | relative_url }}">About</a>
-        <a class="nav-contact" href="{{ site.data.site.photos_url | escape }}" target="_blank" rel="noreferrer">View portfolio <span aria-hidden="true">↗</span></a>
+        <a href="{{ '/' | relative_url }}"{% if page.title == "Home" %} aria-current="page"{% endif %}>Home</a>
+        <a href="{{ '/work/' | relative_url }}"{% if page.title == "Work" %} aria-current="page"{% endif %}>Work</a>
+        <a href="{{ '/journal/' | relative_url }}"{% if page.title == "Journal" %} aria-current="page"{% endif %}>Journal</a>
+        <a href="{{ '/about/' | relative_url }}"{% if page.title == "About" %} aria-current="page"{% endif %}>About</a>
+        <a class="nav-contact" href="{{ '/booking/' | relative_url }}"{% if page.title == "Booking" %} aria-current="page"{% endif %}>Book a shoot</a>
       </nav>
     </header>
 
@@ -29,6 +30,8 @@
       {% if site.data.site.location %}<p>{{ site.data.site.location | escape }}</p>{% endif %}
       <div class="footer-links">
         {% if site.data.site.instagram %}<a href="{{ site.data.site.instagram | escape }}" target="_blank" rel="noreferrer">Instagram ↗</a>{% endif %}
+        <a href="{{ '/booking/' | relative_url }}">Booking</a>
+        <a href="{{ '/work/' | relative_url }}">Photo archive</a>
         <a href="{{ site.data.site.photos_url | escape }}" target="_blank" rel="noreferrer">Photography ↗</a>
       </div>
       <span class="copyright">© {{ site.time | date: "%Y" }} {{ site.data.site.name | escape }}</span>
