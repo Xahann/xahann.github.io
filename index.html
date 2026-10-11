@@ -2,74 +2,158 @@
 layout: default
 title: Home
 ---
-<section class="hero section-wrap">
-  <p class="eyebrow">{{ site.data.site.role | escape }} <span aria-hidden="true">·</span> <span class="status-dot"></span>{{ site.data.site.availability | escape }}</p>
-  <h1>{{ site.data.site.headline | escape }}</h1>
-  <div class="hero-bottom">
-    <p class="hero-intro">{{ site.data.site.intro | escape }}</p>
-    <a class="text-link" href="{{ '/about/' | relative_url }}">A bit more about me <span aria-hidden="true">↗</span></a>
-  </div>
-  <div class="hero-index" aria-hidden="true">PORTFOLIO&nbsp; / &nbsp;{{ site.time | date: "%Y" }}</div>
-</section>
+{% assign all_photos = site.data.website_photos %}
+{% assign featured_project = all_photos | first %}
+<div class="library-shell">
+  <header class="library-topbar">
+    <a class="library-brand" href="{{ '/' | relative_url }}" aria-label="{{ site.data.site.name | escape }} home">
+      <span class="brand-mark" aria-hidden="true">X</span>
+      <span><strong>{{ site.data.site.name | escape }}</strong><small>PHOTO ARCHIVE</small></span>
+    </a>
+    <nav class="library-modules" aria-label="Portfolio sections">
+      <a class="module-active" href="#work" aria-current="page">Library</a>
+      <a href="#journal">Journal</a>
+      <a href="{{ '/about/' | relative_url }}">About</a>
+    </nav>
+    <a class="library-external" href="{{ site.data.site.photos_url | escape }}" target="_blank" rel="noreferrer">
+      Full portfolio <span aria-hidden="true">↗</span>
+    </a>
+  </header>
 
-<section class="section-wrap work-section" id="work">
-  <div class="section-heading">
-    <div>
-      <p class="eyebrow">Selected projects</p>
-      <h2>Good work, good people.</h2>
-    </div>
-    <span class="section-count">01 — 0{{ site.projects.size }}</span>
-  </div>
-  <div class="project-grid">
-    {% assign projects = site.projects | sort: "year" | reverse %}
-    {% for project in projects %}
-      <article class="project-card">
-        <a class="project-image{% cycle ' image-sage', ' image-lilac', ' image-coral' %}" href="{% if project.url != blank %}{{ project.url | escape }}{% else %}{{ '/about/' | relative_url }}{% endif %}" {% if project.url != blank %}target="_blank" rel="noreferrer"{% endif %} aria-label="View {{ project.title | escape }}">
-          {% if project.image != blank %}
-            <img src="{{ project.image | relative_url }}" alt="{{ project.image_alt | default: project.title | escape }}">
-          {% else %}
-            <span class="project-monogram" aria-hidden="true">{{ project.title | slice: 0 }}</span>
-            <span class="image-caption" aria-hidden="true">{{ project.category | default: "Selected work" | upcase }}</span>
-          {% endif %}
-          <span class="image-arrow" aria-hidden="true">↗</span>
-        </a>
-        <div class="project-meta">
-          <div><h3>{{ project.title | escape }}</h3><p>{{ project.description | escape }}</p></div>
-          <span>{{ project.year | escape }}</span>
+  <div class="library-workspace" id="work">
+    <aside class="library-sidebar" aria-label="Photo collections">
+      <p class="panel-label">CATALOG</p>
+      <button class="catalog-item is-active" type="button" data-filter="all" data-filter-label="WEBSITE photo archive" aria-pressed="true">
+        <span class="catalog-icon" aria-hidden="true">▦</span> WEBSITE photos
+        <span class="catalog-count" data-filter-count="all">{{ all_photos.size }}</span>
+      </button>
+
+      <p class="panel-label sidebar-subhead">FILTER BY</p>
+      <button class="catalog-item" type="button" data-filter="motorsport &amp; automotive" data-filter-label="Motorsport &amp; automotive" aria-pressed="false">
+        <span class="catalog-icon" aria-hidden="true">⌁</span> Motorsport &amp; auto
+        <span class="catalog-count" data-filter-count="motorsport &amp; automotive">0</span>
+      </button>
+      <p class="panel-label sidebar-subhead">COLLECTIONS</p>
+      <div class="collection-list">
+        {% for photo in all_photos %}
+          <button class="collection-item" type="button" data-select-photo="{{ forloop.index0 }}">
+            <span class="collection-dot" aria-hidden="true"></span>{{ photo.title | escape }}
+          </button>
+        {% endfor %}
+      </div>
+
+      <a class="sidebar-about" href="{{ '/about/' | relative_url }}">About Xane <span aria-hidden="true">↗</span></a>
+    </aside>
+
+    <section class="library-main" aria-label="Selected photography">
+      <div class="library-toolbar">
+        <div class="toolbar-heading">
+          <p class="eyebrow">{{ site.data.site.role | escape }}</p>
+          <h1><span data-gallery-title>WEBSITE photo archive</span> <span class="toolbar-total" data-visible-count>{{ all_photos.size }}</span></h1>
         </div>
-      </article>
+        <div class="toolbar-actions">
+          <label class="photo-search">
+            <span aria-hidden="true">⌕</span>
+            <span class="visually-hidden">Search photographs</span>
+            <input type="search" placeholder="Search photographs" data-photo-search>
+          </label>
+          <button class="view-toggle" type="button" data-view-toggle aria-pressed="false" aria-label="Switch to compact view" title="Switch view">▦</button>
+        </div>
+      </div>
+
+      <div class="photo-grid" data-photo-grid>
+        {% for photo in all_photos %}
+          {% assign photo_link = photo.external_url | default: site.data.site.photos_url %}
+          {% assign photo_image = photo.image %}
+          {% unless photo_image contains '://' %}{% assign photo_image = photo_image | relative_url %}{% endunless %}
+          <article class="photo-card" data-photo-card data-category="{{ photo.category | downcase | escape }}" data-search="{{ photo.title | downcase | escape }} {{ photo.category | downcase | escape }} {{ photo.description | downcase | escape }}">
+            <button class="photo-select{% if forloop.first %} is-selected{% endif %}" type="button" data-photo-select="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Show details for {{ photo.title | escape }}" data-title="{{ photo.title | escape }}" data-category-label="{{ photo.category | escape }}" data-description="{{ photo.description | escape }}" data-image="{{ photo_image | escape }}" data-alt="{{ photo.image_alt | default: photo.title | escape }}" data-url="{{ photo_link | escape }}">
+              <span class="photo-thumbnail">
+                {% if photo.image != blank %}
+                  <img src="{{ photo_image | escape }}" alt="" loading="lazy" decoding="async">
+                {% else %}
+                  <span class="thumbnail-placeholder" aria-hidden="true">{{ photo.title | slice: 0 }}</span>
+                {% endif %}
+                <span class="thumbnail-check" aria-hidden="true">✓</span>
+              </span>
+              <span class="thumbnail-label">
+                <strong>{{ photo.title | escape }}</strong>
+                <small>{{ photo.category | escape }}</small>
+              </span>
+            </button>
+            <a class="photo-open" href="{{ photo_link | escape }}" target="_blank" rel="noreferrer" aria-label="Open {{ photo.title | escape }} in the full portfolio">↗</a>
+          </article>
+        {% else %}
+          <p class="empty-state">Add photographs from Pages CMS to build your archive.</p>
+        {% endfor %}
+        <p class="no-results" data-no-results hidden>No photographs match that search.</p>
+      </div>
+
+      <div class="filmstrip-bar">
+        <span class="filmstrip-title">FILMSTRIP</span>
+        <div class="filmstrip" aria-label="Quick photo selection">
+          {% for photo in all_photos %}
+            {% assign photo_image = photo.image %}
+            {% unless photo_image contains '://' %}{% assign photo_image = photo_image | relative_url %}{% endunless %}
+            <button class="filmstrip-item{% if forloop.first %} is-selected{% endif %}" type="button" data-select-photo="{{ forloop.index0 }}" aria-label="Select {{ photo.title | escape }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+              {% if photo.image != blank %}<img src="{{ photo_image | escape }}" alt="" loading="lazy" decoding="async">{% else %}<span>{{ photo.title | slice: 0 }}</span>{% endif %}
+            </button>
+          {% endfor %}
+        </div>
+        <span class="filmstrip-position"><span data-selected-index>1</span> / {{ all_photos.size }}</span>
+      </div>
+    </section>
+
+    <aside class="photo-inspector" aria-label="Selected photograph details" data-photo-inspector>
+      <div class="inspector-heading">
+        <h2>Inspector</h2>
+        <span class="inspector-menu" aria-hidden="true">•••</span>
+      </div>
+      {% if featured_project %}
+        {% assign featured_link = featured_project.external_url | default: site.data.site.photos_url %}
+        {% assign featured_image = featured_project.image %}
+        {% unless featured_image contains '://' %}{% assign featured_image = featured_image | relative_url %}{% endunless %}
+        <a class="inspector-preview" data-inspector-link href="{{ featured_link | escape }}" target="_blank" rel="noreferrer" aria-label="Open selected photo in the full portfolio">
+          <img data-inspector-image src="{{ featured_image | escape }}" alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">
+          <span class="preview-open" aria-hidden="true">↗</span>
+        </a>
+        <section class="inspector-section">
+          <p class="panel-label">SELECTED PHOTO</p>
+          <h3 data-inspector-title>{{ featured_project.title | escape }}</h3>
+          <p class="inspector-description" data-inspector-description>{{ featured_project.description | escape }}</p>
+        </section>
+        <section class="inspector-section inspector-details">
+          <p class="panel-label">PHOTO DETAILS</p>
+          <dl>
+            <div><dt>Collection</dt><dd data-inspector-category>{{ featured_project.category | escape }}</dd></div>
+            <div><dt>Creator</dt><dd>{{ site.data.site.name | escape }}</dd></div>
+            <div><dt>Medium</dt><dd>Photography</dd></div>
+          </dl>
+        </section>
+        <a class="inspector-link" data-inspector-action href="{{ featured_link | escape }}" target="_blank" rel="noreferrer">View original <span aria-hidden="true">↗</span></a>
+      {% else %}
+        <p class="empty-state">Your photo details will appear here.</p>
+      {% endif %}
+    </aside>
+  </div>
+</div>
+
+<section class="library-journal" id="journal">
+  <div class="journal-heading">
+    <div><p class="panel-label">FIELD NOTES</p><h2>From the journal</h2></div>
+    <span class="journal-caption">NOTES FROM BEHIND THE LENS</span>
+  </div>
+  <div class="post-list">
+    {% for post in site.posts limit: 4 %}
+      <a class="post-row" href="{{ post.url | relative_url }}">
+        <span class="post-date">{{ post.date | date: "%b %d, %Y" }}</span>
+        <span class="post-title">{{ post.title | escape }}</span>
+        <span class="post-category">{{ post.category | default: "Notes" | escape }}</span>
+        <span class="row-arrow" aria-hidden="true">↗</span>
+      </a>
     {% else %}
-      <p class="empty-state">Your projects will appear here. Add one in the Pages CMS admin.</p>
+      <p class="empty-state">Journal entries will appear here.</p>
     {% endfor %}
   </div>
 </section>
-
-<section class="journal-section" id="journal">
-  <div class="section-wrap">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">Notes from the process</p>
-        <h2>A journal, of sorts.</h2>
-      </div>
-      <span class="section-count">THOUGHTS & OBSERVATIONS</span>
-    </div>
-    <div class="post-list">
-      {% for post in site.posts limit: 4 %}
-        <a class="post-row" href="{{ post.url | relative_url }}">
-          <span class="post-date">{{ post.date | date: "%b %d, %Y" }}</span>
-          <span class="post-title">{{ post.title | escape }}</span>
-          <span class="post-category">{{ post.category | default: "Notes" | escape }}</span>
-          <span class="row-arrow" aria-hidden="true">↗</span>
-        </a>
-      {% else %}
-        <p class="empty-state">Your writing will appear here. Add a post in the Pages CMS admin.</p>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<section class="contact-band section-wrap">
-  <p class="eyebrow">Have something in mind?</p>
-  <h2>Let’s make it<br><span>matter.</span></h2>
-  <a class="contact-button" href="mailto:{{ site.data.site.email | escape }}">Start a conversation <span aria-hidden="true">↗</span></a>
-</section>
+<script src="{{ '/assets/js/library.js' | relative_url }}" defer></script>

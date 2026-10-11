@@ -1,8 +1,9 @@
-# Portfolio & journal
+# Xane Photography
 
-A small, responsive Jekyll site for GitHub Pages, with content managed in Pages CMS.
-The example name, email, project links, and articles are placeholders—replace them
-before publishing.
+A responsive Jekyll portfolio for photographer, videographer, and editor Xane.
+The photo library includes an optimized local copy of the `WEBSITE` automotive
+collection. Only images from that local collection are displayed in the photo
+library.
 
 ## Publish with GitHub Pages
 
@@ -18,10 +19,13 @@ before publishing.
 
 ## Update your site
 
-- **Site settings** changes the name, homepage headline, introduction, contact
-  details, and social links.
-- **Projects** adds or edits project cards. Upload images in the project editor;
-  images are stored in `assets/uploads`.
+- **Site settings** changes the name, homepage headline, work focus, and portfolio
+  and Instagram links.
+- **Projects** adds or edits featured photos. Upload images in the project
+  editor; images are stored in `assets/uploads`.
+- **Website photo archive** images are listed in `_data/website_photos.yml` and
+  optimized copies live in `assets/uploads/website`. The original JPEGs are not
+  modified.
 - **Journal posts** creates and edits dated posts. The homepage shows the four
   newest.
 - **About page** edits the long-form introduction.
