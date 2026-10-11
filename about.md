@@ -4,9 +4,6 @@ permalink: /about/
 description: Meet Xane, photographer, videographer, and editor.
 ---
 
-I’m **Xane**, a photographer, videographer, and editor focused on artists, live music, and car culture.
-
-I work across photography and video to capture people, performances, and the details around them. My portfolio includes artist features, concert coverage, and automotive work.
 
 ### What I do
 
