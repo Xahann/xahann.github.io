@@ -1,0 +1,12 @@
+---
+layout: default
+---
+<article class="post-shell">
+  <a class="back-link" href="{{ '/#journal' | relative_url }}">← Back to journal</a>
+  <header class="post-header">
+    <p class="eyebrow">{{ page.category | default: "Notes" | escape }} <span aria-hidden="true">·</span> {{ page.date | date: "%B %-d, %Y" }}</p>
+    <h1 class="page-title">{{ page.title | escape }}</h1>
+    {% if page.description %}<p class="post-deck">{{ page.description | escape }}</p>{% endif %}
+  </header>
+  <div class="prose">{{ content }}</div>
+</article>

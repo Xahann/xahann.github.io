@@ -1,0 +1,22 @@
+title: Your Name — Portfolio
+description: A personal portfolio and journal.
+baseurl: ""
+url: ""
+markdown: kramdown
+permalink: /journal/:title/
+
+collections:
+  projects:
+    output: false
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
