@@ -207,8 +207,15 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
   display: grid;
   grid-template-columns: 222px minmax(380px, 1fr) 292px;
 }
-.library-sidebar, .photo-inspector { background: var(--panel-bg); }
-.library-sidebar { position: relative; padding: 23px 11px 20px; border-right: 1px solid #111; }
+.library-sidebar, .photo-inspector {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  align-self: start;
+  overflow-y: auto;
+  background: var(--panel-bg);
+}
+.library-sidebar { padding: 23px 11px 20px; border-right: 1px solid #111; }
 .panel-label { margin: 0; color: #a9a9a9; font-size: .59rem; font-weight: 650; letter-spacing: .12em; }
 .library-sidebar > .panel-label { padding-inline: 10px; }
 .catalog-item, .collection-item {
@@ -316,6 +323,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .inspector-link { width: 100%; display: flex; justify-content: space-between; margin-top: 16px; padding: 9px 10px; border: 1px solid #4b4b4b; border-radius: 3px; background: transparent; color: #ddd; font: inherit; font-size: .68rem; text-align: left; cursor: pointer; }
 .inspector-link:hover { border-color: #777; background: #303030; }
 .inspector-link:disabled { opacity: .5; cursor: default; }
+.inspector-instagram-link[hidden] { display: none; }
 
 .original-dialog { width: min(96vw, 1500px); max-width: 96vw; max-height: 96svh; overflow: auto; padding: 12px; border: 1px solid #555; border-radius: 4px; background: #171717; color: #eee; }
 .original-dialog::backdrop { background: #000d; }
@@ -340,6 +348,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 
 @media (max-width: 820px) {
   .library-workspace { grid-template-columns: 180px minmax(0, 1fr); }
+  .library-sidebar, .photo-inspector { position: static; height: auto; overflow: visible; }
   .library-main { grid-row: 1; grid-column: 2; }
   .library-sidebar { grid-row: 1 / span 2; grid-column: 1; }
   .photo-inspector { grid-row: 2; grid-column: 2; display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr); align-items: start; gap: 0 16px; padding: 0 16px 16px; border-top: 1px solid #111; border-left: 0; }

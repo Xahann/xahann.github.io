@@ -25,7 +25,9 @@ library.
   editor; images are stored in `assets/uploads`.
 - **Website photo archive** images are listed in `_data/website_photos.yml` and
   optimized copies live in `assets/uploads/website`. The original JPEGs are not
-  modified.
+  modified. Add an `instagram_url` to a photo entry only when you have verified
+  that the Instagram post contains that photo; the homepage then shows a link
+  to that post when the photo is selected.
 - **Journal posts** creates and edits dated posts. The homepage shows the four
   newest.
 - **About page** edits the long-form introduction.

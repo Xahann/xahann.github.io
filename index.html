@@ -68,7 +68,7 @@ title: Home
           {% assign photo_original = photo_filename | prepend: "/WEBSITE/" | relative_url %}
           {% unless photo_image contains '://' %}{% assign photo_image = photo_image | relative_url %}{% endunless %}
           <article class="photo-card" data-photo-card data-category="{{ photo.category | downcase | escape }}" data-search="{{ photo.title | downcase | escape }} {{ photo.category | downcase | escape }} {{ photo.description | downcase | escape }}">
-            <button class="photo-select{% if forloop.first %} is-selected{% endif %}" type="button" data-photo-select="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Show details for {{ photo.title | escape }}" data-title="{{ photo.title | escape }}" data-category-label="{{ photo.category | escape }}" data-description="{{ photo.description | escape }}" data-image="{{ photo_image | escape }}" data-original-image="{{ photo_original | escape }}" data-alt="{{ photo.image_alt | default: photo.title | escape }}">
+            <button class="photo-select{% if forloop.first %} is-selected{% endif %}" type="button" data-photo-select="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Show details for {{ photo.title | escape }}" data-title="{{ photo.title | escape }}" data-category-label="{{ photo.category | escape }}" data-description="{{ photo.description | escape }}" data-image="{{ photo_image | escape }}" data-original-image="{{ photo_original | escape }}" data-instagram-url="{{ photo.instagram_url | escape }}" data-alt="{{ photo.image_alt | default: photo.title | escape }}">
               <span class="photo-thumbnail">
                 {% if photo.image != blank %}
                   <img src="{{ photo_image | escape }}" alt="" loading="lazy" decoding="async">
@@ -131,6 +131,7 @@ title: Home
           </dl>
         </section>
         <button class="inspector-link" data-inspector-action type="button" data-original-image="{{ featured_original | escape }}" data-title="{{ featured_project.title | escape }}" data-alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">See original</button>
+        <a class="inspector-link inspector-instagram-link" data-inspector-instagram {% if featured_project.instagram_url %}href="{{ featured_project.instagram_url | escape }}"{% else %}hidden{% endif %} target="_blank" rel="noreferrer">View Instagram post <span aria-hidden="true">↗</span></a>
       {% else %}
         <p class="empty-state">Your photo details will appear here.</p>
       {% endif %}

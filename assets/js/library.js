@@ -10,6 +10,7 @@
   const inspectorImage = document.querySelector("[data-inspector-image]");
   const inspectorPreview = document.querySelector(".inspector-preview");
   const inspectorAction = document.querySelector("[data-inspector-action]");
+  const inspectorInstagram = document.querySelector("[data-inspector-instagram]");
   const originalDialog = document.querySelector("[data-original-dialog]");
   const originalPreview = document.querySelector("[data-original-preview]");
   const originalTitle = document.querySelector("[data-original-title]");
@@ -101,6 +102,12 @@
       inspectorAction.dataset.title = photo.dataset.title;
       inspectorAction.dataset.alt = photo.dataset.alt;
       inspectorAction.disabled = !photo.dataset.originalImage;
+      inspectorInstagram.hidden = !photo.dataset.instagramUrl;
+      if (photo.dataset.instagramUrl) {
+        inspectorInstagram.href = photo.dataset.instagramUrl;
+      } else {
+        inspectorInstagram.removeAttribute("href");
+      }
       selectedIndex.textContent = index + 1;
     });
   });
