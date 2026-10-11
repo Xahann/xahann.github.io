@@ -35,7 +35,7 @@ description: Photography by Xane — artists, live music, and car culture.
           <button class="carousel-toggle" type="button" data-carousel-toggle aria-label="Pause slideshow">Pause</button>
         </div>
       </div>
-      <p class="carousel-note"></p>
+      <p class="carousel-note">A rotating selection from the photo archive</p>
       <script type="application/json" data-carousel-photos>[
         {% for photo in all_photos %}
           {"image": {{ photo.image | relative_url | jsonify }}, "title": {{ photo.title | jsonify }}, "category": {{ photo.category | jsonify }}, "alt": {{ photo.image_alt | default: photo.title | jsonify }}}{% unless forloop.last %},{% endunless %}

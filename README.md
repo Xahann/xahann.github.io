@@ -22,7 +22,8 @@ library.
 - **Site settings** changes the name, homepage headline, work focus, Instagram
   link, and booking email. Set the booking email address to your
   own inbox; the booking form opens a prefilled message in the visitor's email app.
-- **Homepage** features a randomly selected carousel from the photo archive.
+- **Homepage** features a randomly selected carousel from the photo archive
+  and links to the other site sections.
 - **Work** is the searchable photo archive, **Journal** lists all published
   notes, and **Booking** collects project details for an email inquiry.
 - **Projects** adds or edits featured photos. Upload images in the project
