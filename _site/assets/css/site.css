@@ -151,7 +151,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .booking-submit:hover span { color: var(--paper); }
 .booking-note, .booking-error { color: var(--muted); font-size: .72rem; line-height: 1.6; }
 .booking-error { color: #ff9b8f; }
-.booking-error[hidden] { display: none; }
+.booking-error[hidden], .thanks-page[hidden] { display: none; }
 
 @media (max-width: 700px) {
   .site-header, .site-footer, .section-wrap, .page-shell, .post-shell { width: min(100% - 40px, 1180px); }

@@ -1,0 +1,28 @@
+---
+layout: default
+title: Thanks
+permalink: /thanks/
+description: Thanks for reaching out to Xane.
+sitemap: false
+---
+<section class="page-shell booking-page thanks-page" data-thanks-page hidden>
+  <p class="eyebrow">Inquiry sent</p>
+  <h1 class="page-title">Thanks for reaching out.</h1>
+  <p class="booking-intro">Your email draft is ready to send. Once it arrives, I’ll get back to you as soon as I can.</p>
+  <div class="home-actions">
+    <a class="button-link button-primary" href="{{ '/work/' | relative_url }}">Browse the work <span aria-hidden="true"><img class="arrow-icon" src="{{ '/icons/arrow.png' | relative_url }}" alt=""></span></a>
+    <a class="button-link" href="{{ '/' | relative_url }}">Back to home</a>
+  </div>
+</section>
+<script>
+  (() => {
+    const page = document.querySelector("[data-thanks-page]");
+    let ok = false;
+    try {
+      ok = sessionStorage.getItem("booking-submitted") === "1";
+      sessionStorage.removeItem("booking-submitted");
+    } catch (error) {}
+    if (ok) page.hidden = false;
+    else window.location.replace("{{ '/booking/' | relative_url }}");
+  })();
+</script>

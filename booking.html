@@ -8,7 +8,7 @@ description: Get in touch with Xane about a photography or video booking.
   <p class="eyebrow">Booking &amp; inquiries</p>
   <h1 class="page-title">Let’s make something.</h1>
   <p class="booking-intro">Share a few details about your project and I’ll be in touch.</p>
-  <form class="booking-form" data-booking-form data-recipient="{{ site.data.site.email | escape }}" action="mailto:{{ site.data.site.email | escape }}" method="post" enctype="text/plain">
+  <form class="booking-form" data-booking-form data-recipient="{{ site.data.site.email | escape }}" data-thanks="{{ '/thanks/' | relative_url }}" action="mailto:{{ site.data.site.email | escape }}" method="post" enctype="text/plain">
     <div class="booking-fields">
       <label>
         <span>Your name</span>

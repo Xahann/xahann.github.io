@@ -25,6 +25,15 @@
       "Project details:",
       values.get("message")
     ].join("\n");
-    window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+    const mailto = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+    try {
+      sessionStorage.setItem("booking-submitted", "1");
+    } catch (storageError) {}
+    const opener = document.createElement("a");
+    opener.href = mailto;
+    opener.click();
+    window.setTimeout(() => {
+      window.location.href = form.dataset.thanks;
+    }, 700);
   });
 })();
