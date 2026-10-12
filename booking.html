@@ -41,5 +41,12 @@ description: Get in touch with Xane about a photography or video booking.
     <p class="booking-note">{% if site.data.site.email %}This form opens your email app with your inquiry ready to send.{% else %}Set a booking email in Pages CMS site settings to receive inquiries.{% endif %}</p>
     <p class="booking-error" data-booking-error role="alert" hidden></p>
   </form>
+  <section class="booking-direct" aria-labelledby="direct-heading">
+    <h2 id="direct-heading">Contact me directly</h2>
+    <dl>
+      {% if site.data.site.email %}<div><dt>Email</dt><dd><a href="mailto:{{ site.data.site.email | escape }}">{{ site.data.site.email | escape }}</a></dd></div>{% endif %}
+      {% if site.data.site.phone %}{% assign phone = site.data.site.phone | replace: " ", "" %}<div><dt>Phone</dt><dd><a href="tel:+1{{ phone | escape }}">{{ phone | slice: 0, 3 }}-{{ phone | slice: 3, 3 }}-{{ phone | slice: 6, 4 }}</a></dd></div>{% endif %}
+    </dl>
+  </section>
 </section>
 <script src="{{ '/assets/js/booking.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>

@@ -28,6 +28,9 @@ content:
         label: Booking email
         type: string
         required: true
+      - name: phone
+        label: Phone number (digits only)
+        type: string
       - name: focus
         label: Work focus
         type: string

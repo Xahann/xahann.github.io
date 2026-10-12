@@ -150,6 +150,13 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .booking-submit:hover { border-color: var(--accent); background: var(--accent); color: var(--paper); }
 .booking-submit:hover span { color: var(--paper); }
 .booking-note, .booking-error { color: var(--muted); font-size: .72rem; line-height: 1.6; }
+.booking-direct { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line); }
+.booking-direct h2 { margin: 0 0 16px; font-size: 1.1rem; font-weight: 500; }
+.booking-direct dl { margin: 0; }
+.booking-direct dl div { display: flex; gap: 24px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.booking-direct dt { width: 80px; color: var(--muted); font-size: .72rem; }
+.booking-direct dd { margin: 0; font-size: .85rem; }
+.booking-direct a:hover { color: var(--accent); }
 .booking-error { color: #ff9b8f; }
 .booking-error[hidden], .thanks-page[hidden] { display: none; }
 
