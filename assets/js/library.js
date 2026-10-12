@@ -65,6 +65,15 @@
 
   searchInput.addEventListener("input", updateGallery);
 
+  const mobileQuery = window.matchMedia("(max-width: 600px)");
+  const inspectorPanel = document.querySelector("[data-photo-inspector]");
+  function setInspectorOpen(open) {
+    document.body.classList.toggle("inspector-open", open);
+    if (mobileQuery.matches) inspectorPanel.setAttribute("aria-hidden", String(!open));
+    else inspectorPanel.removeAttribute("aria-hidden");
+  }
+  setInspectorOpen(false);
+
   document.querySelectorAll("[data-photo-select], [data-select-photo]").forEach((button) => {
     button.addEventListener("click", () => {
       const index = Number(button.dataset.photoSelect || button.dataset.selectPhoto);
@@ -109,8 +118,19 @@
         inspectorInstagram.removeAttribute("href");
       }
       selectedIndex.textContent = index + 1;
+      if (mobileQuery.matches && button.hasAttribute("data-photo-select")) setInspectorOpen(true);
     });
   });
+
+  document.querySelectorAll("[data-inspector-close]").forEach((el) => {
+    el.addEventListener("click", () => setInspectorOpen(false));
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && document.body.classList.contains("inspector-open") && !originalDialog.open) {
+      setInspectorOpen(false);
+    }
+  });
+  mobileQuery.addEventListener("change", () => setInspectorOpen(false));
 
   [inspectorPreview, inspectorAction].forEach((button) => {
     button.addEventListener("click", () => {

@@ -6,7 +6,7 @@
     <meta name="description" content="Photography and video by Xane.">
     <meta name="theme-color" content="#090b10">
     <title>Work — Xane</title>
-    <link rel="stylesheet" href="/assets/css/site.css?booking-button=2">
+    <link rel="stylesheet" href="/assets/css/site.css?drawer=3">
   </head>
   <body class="library-page">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -1838,10 +1838,10 @@
       </div>
     </section>
 
-    <aside class="photo-inspector" aria-label="Selected photograph details" data-photo-inspector>
+    <div class="inspector-backdrop" data-inspector-close></div><aside class="photo-inspector" aria-label="Selected photograph details" data-photo-inspector>
       <div class="inspector-heading">
         <h2>Inspector</h2>
-        <span class="inspector-menu" aria-hidden="true">•••</span>
+        <span class="inspector-menu" aria-hidden="true">•••</span><button class="inspector-close" type="button" aria-label="Close inspector" data-inspector-close>✕</button>
       </div>
       
         
@@ -1901,7 +1901,7 @@
   </div>
   <img data-original-preview alt="">
 </dialog>
-<script src="/assets/js/library.js?popup=1" defer></script>
+<script src="/assets/js/library.js?drawer=1" defer></script>
 
     </main>
 

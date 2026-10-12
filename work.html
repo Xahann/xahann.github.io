@@ -91,10 +91,12 @@ description: Browse Xane's photography archive.
       </div>
     </section>
 
+    <div class="inspector-backdrop" data-inspector-close></div>
     <aside class="photo-inspector" aria-label="Selected photograph details" data-photo-inspector>
       <div class="inspector-heading">
         <h2>Inspector</h2>
         <span class="inspector-menu" aria-hidden="true">•••</span>
+        <button class="inspector-close" type="button" aria-label="Close inspector" data-inspector-close>✕</button>
       </div>
       {% if featured_project %}
         {% assign featured_image = featured_project.image %}
