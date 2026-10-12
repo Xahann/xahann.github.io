@@ -42,4 +42,4 @@ description: Get in touch with Xane about a photography or video booking.
     <p class="booking-error" data-booking-error role="alert" hidden></p>
   </form>
 </section>
-<script src="{{ '/assets/js/booking.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/booking.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
