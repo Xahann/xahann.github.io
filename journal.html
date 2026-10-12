@@ -14,7 +14,7 @@ description: Field notes and stories from behind the lens.
         <span class="post-date">{{ post.date | date: "%b %d, %Y" }}</span>
         <span class="post-title">{{ post.title | escape }}</span>
         <span class="post-category">{{ post.category | default: "Notes" | escape }}</span>
-        <span class="row-arrow" aria-hidden="true">↗</span>
+        <span class="row-arrow" aria-hidden="true"><img class="arrow-icon" src="{{ '/icons/arrow.png' | relative_url }}" alt=""></span>
       </a>
     {% else %}
       <p class="empty-state">Journal entries will appear here.</p>

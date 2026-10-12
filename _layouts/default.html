@@ -29,7 +29,7 @@
       <a class="wordmark" href="{{ '/' | relative_url }}">{{ site.data.site.name | escape }}<span class="wordmark-dot">.</span></a>
       {% if site.data.site.location %}<p>{{ site.data.site.location | escape }}</p>{% endif %}
       <div class="footer-links">
-        {% if site.data.site.instagram %}<a href="{{ site.data.site.instagram | escape }}" target="_blank" rel="noreferrer">Instagram profile ↗</a>{% endif %}
+        {% if site.data.site.instagram %}<a href="{{ site.data.site.instagram | escape }}" target="_blank" rel="noreferrer">Instagram profile <img class="arrow-icon" src="{{ '/icons/arrow.png' | relative_url }}" alt=""></a>{% endif %}
         <a href="{{ '/booking/' | relative_url }}">Booking</a>
         <a href="{{ '/work/' | relative_url }}">Photo archive</a>
       </div>

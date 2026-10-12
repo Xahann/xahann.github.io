@@ -37,7 +37,7 @@ description: Get in touch with Xane about a photography or video booking.
         <textarea name="message" rows="6" required></textarea>
       </label>
     </div>
-    <button class="button-link button-primary booking-submit" type="submit">Continue to email <span aria-hidden="true">↗</span></button>
+    <button class="button-link button-primary booking-submit" type="submit">Continue to email <span aria-hidden="true"><img class="arrow-icon" src="{{ '/icons/arrow.png' | relative_url }}" alt=""></span></button>
     <p class="booking-note">{% if site.data.site.email %}This form opens your email app with your inquiry ready to send.{% else %}Set a booking email in Pages CMS site settings to receive inquiries.{% endif %}</p>
     <p class="booking-error" data-booking-error role="alert" hidden></p>
   </form>

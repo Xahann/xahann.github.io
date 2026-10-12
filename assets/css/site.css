@@ -71,6 +71,11 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .post-title { font-family: var(--serif); font-size: clamp(1.15rem, 2.3vw, 1.65rem); letter-spacing: -.025em; }
 .post-category { text-align: right; }
 .row-arrow { color: var(--accent); text-align: right; }
+.arrow-icon { width: 1.15em; height: 1.15em; display: inline-block; flex: none; vertical-align: -.2em; object-fit: contain; }
+.arrow-icon.arrow-right { transform: rotate(45deg); }
+.arrow-icon.arrow-left { transform: rotate(-135deg); }
+.carousel-controls .arrow-icon { width: 20px; height: 20px; vertical-align: middle; }
+.row-arrow .arrow-icon, .home-section-link .arrow-icon { width: 18px; height: 18px; }
 .contact-band { min-height: 450px; padding-block: 94px; display: grid; grid-template-columns: 1fr auto; align-content: center; align-items: end; column-gap: 2rem; }
 .contact-band .eyebrow { grid-column: 1 / -1; margin-bottom: 18px; }
 .contact-band h2 { margin: 0; font-family: var(--serif); font-size: clamp(4rem, 9vw, 8rem); font-weight: 400; letter-spacing: -.075em; line-height: .85; }

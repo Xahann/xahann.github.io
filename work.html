@@ -29,7 +29,7 @@ description: Browse Xane's photography archive.
         {% endfor %}
       </div>
 
-      <a class="sidebar-about" href="{{ '/about/' | relative_url }}">About Xane <span aria-hidden="true">↗</span></a>
+      <a class="sidebar-about" href="{{ '/about/' | relative_url }}">About Xane <span aria-hidden="true"><img class="arrow-icon" src="{{ '/icons/arrow.png' | relative_url }}" alt=""></span></a>
     </aside>
 
     <section class="library-main" aria-label="Selected photography">
@@ -120,7 +120,7 @@ description: Browse Xane's photography archive.
           </dl>
         </section>
         <button class="inspector-link" data-inspector-action type="button" data-original-image="{{ featured_original | escape }}" data-title="{{ featured_project.title | escape }}" data-alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">See original</button>
-        <a class="inspector-link inspector-instagram-link" data-inspector-instagram {% if featured_project.instagram_url %}href="{{ featured_project.instagram_url | escape }}"{% else %}hidden{% endif %} target="_blank" rel="noreferrer">View Instagram post <span aria-hidden="true">↗</span></a>
+        <a class="inspector-link inspector-instagram-link" data-inspector-instagram {% if featured_project.instagram_url %}href="{{ featured_project.instagram_url | escape }}"{% else %}hidden{% endif %} target="_blank" rel="noreferrer">View Instagram post <span aria-hidden="true"><img class="arrow-icon" src="{{ '/icons/arrow.png' | relative_url }}" alt=""></span></a>
       {% else %}
         <p class="empty-state">Your photo details will appear here.</p>
       {% endif %}

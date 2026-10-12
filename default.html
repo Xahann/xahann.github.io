@@ -29,9 +29,9 @@
       <a class="wordmark" href="{{ '/' | relative_url }}">{{ site.data.site.name | escape }}<span class="wordmark-dot">.</span></a>
       <p>{{ site.data.site.location | escape }}</p>
       <div class="footer-links">
-        {% if site.data.site.github %}<a href="{{ site.data.site.github | escape }}">GitHub ↗</a>{% endif %}
-        {% if site.data.site.linkedin %}<a href="{{ site.data.site.linkedin | escape }}">LinkedIn ↗</a>{% endif %}
-        <a href="mailto:{{ site.data.site.email | escape }}">Email ↗</a>
+        {% if site.data.site.github %}<a href="{{ site.data.site.github | escape }}">GitHub <img class="arrow-icon" src="{{ '/icons/arrow.png' | relative_url }}" alt=""></a>{% endif %}
+        {% if site.data.site.linkedin %}<a href="{{ site.data.site.linkedin | escape }}">LinkedIn <img class="arrow-icon" src="{{ '/icons/arrow.png' | relative_url }}" alt=""></a>{% endif %}
+        <a href="mailto:{{ site.data.site.email | escape }}">Email <img class="arrow-icon" src="{{ '/icons/arrow.png' | relative_url }}" alt=""></a>
       </div>
       <span class="copyright">© {{ site.time | date: "%Y" }} {{ site.data.site.name | escape }}</span>
     </footer>
