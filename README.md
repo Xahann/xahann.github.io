@@ -1,9 +1,8 @@
 # Xane Photography
 
 A responsive Jekyll portfolio for photographer, videographer, and editor Xane.
-The photo library includes an optimized local copy of the `WEBSITE` automotive
-collection. Only images from that local collection are displayed in the photo
-library.
+The photo library includes the automotive `WEBSITE` collection and the music
+artist images in `Music artists`.
 
 ## Publish with GitHub Pages
 
@@ -28,11 +27,12 @@ library.
   notes, and **Booking** collects project details for an email inquiry.
 - **Projects** adds or edits featured photos. Upload images in the project
   editor; images are stored in `assets/uploads`.
-- **Website photo archive** images are listed in `_data/website_photos.yml` and
-  optimized copies live in `assets/uploads/website`. The original JPEGs are not
-  modified. Add an `instagram_url` to a photo entry only when you have verified
-  that the Instagram post contains that photo; the Work page then shows a link
-  to that post when the photo is selected.
+- **Work photo archive** images are listed in `_data/website_photos.yml`.
+  Automotive images use optimized copies in `assets/uploads/website`, and the
+  music artist images are served from `Music artists`. Add an `instagram_url` to
+  a photo entry only when you have verified that the Instagram post contains
+  that photo; the Work page then shows a link to that post when the photo is
+  selected.
 - **Journal posts** creates and edits dated posts. New posts appear on the
   Journal page.
 - **About page** edits the long-form introduction.

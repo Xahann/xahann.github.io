@@ -20,6 +20,10 @@ description: Browse Xane's photography archive.
         <span class="catalog-icon" aria-hidden="true">⌁</span> Motorsport &amp; auto
         <span class="catalog-count" data-filter-count="motorsport &amp; automotive">0</span>
       </button>
+      <button class="catalog-item" type="button" data-filter="artist photography" data-filter-label="Artist photography" aria-pressed="false">
+        <span class="catalog-icon" aria-hidden="true">♫</span> Music artists
+        <span class="catalog-count" data-filter-count="artist photography">0</span>
+      </button>
       <p class="panel-label sidebar-subhead">COLLECTIONS</p>
       <div class="collection-list">
         {% for photo in all_photos %}
@@ -52,7 +56,11 @@ description: Browse Xane's photography archive.
         {% for photo in all_photos %}
           {% assign photo_image = photo.image %}
           {% assign photo_filename = photo.image | split: "/" | last %}
-          {% assign photo_original = photo_filename | prepend: "/WEBSITE/" | relative_url %}
+          {% if photo.original_image %}
+            {% assign photo_original = photo.original_image | relative_url %}
+          {% else %}
+            {% assign photo_original = photo_filename | prepend: "/WEBSITE/" | relative_url %}
+          {% endif %}
           {% unless photo_image contains '://' %}{% assign photo_image = photo_image | relative_url %}{% endunless %}
           <article class="photo-card" data-photo-card data-category="{{ photo.category | downcase | escape }}" data-search="{{ photo.title | downcase | escape }} {{ photo.category | downcase | escape }} {{ photo.description | downcase | escape }}">
             <button class="photo-select{% if forloop.first %} is-selected{% endif %}" type="button" data-photo-select="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Show details for {{ photo.title | escape }}" data-title="{{ photo.title | escape }}" data-category-label="{{ photo.category | escape }}" data-description="{{ photo.description | escape }}" data-image="{{ photo_image | escape }}" data-original-image="{{ photo_original | escape }}" data-instagram-url="{{ photo.instagram_url | escape }}" data-alt="{{ photo.image_alt | default: photo.title | escape }}">
@@ -101,7 +109,11 @@ description: Browse Xane's photography archive.
       {% if featured_project %}
         {% assign featured_image = featured_project.image %}
         {% assign featured_filename = featured_project.image | split: "/" | last %}
-        {% assign featured_original = featured_filename | prepend: "/WEBSITE/" | relative_url %}
+        {% if featured_project.original_image %}
+          {% assign featured_original = featured_project.original_image | relative_url %}
+        {% else %}
+          {% assign featured_original = featured_filename | prepend: "/WEBSITE/" | relative_url %}
+        {% endif %}
         {% unless featured_image contains '://' %}{% assign featured_image = featured_image | relative_url %}{% endunless %}
         <button class="inspector-preview" data-inspector-link type="button" aria-label="View {{ featured_project.title | escape }} at full quality" data-original-image="{{ featured_original | escape }}" data-title="{{ featured_project.title | escape }}" data-alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">
           <img data-inspector-image src="{{ featured_image | escape }}" alt="{{ featured_project.image_alt | default: featured_project.title | escape }}">
